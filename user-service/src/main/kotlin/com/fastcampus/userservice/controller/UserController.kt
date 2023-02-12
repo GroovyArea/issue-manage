@@ -28,11 +28,15 @@ class UserController(
     }
 
     @DeleteMapping("/logout")
+    suspend fun logout(@AuthToken token: String) {
+        userService.logout(token)
+    }
+
+    @GetMapping("/me")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     suspend fun get(
         @AuthToken token: String
     ): MeResponse {
         return MeResponse(userService.getByToken(token))
     }
-
 }
